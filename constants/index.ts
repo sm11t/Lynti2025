@@ -74,7 +74,7 @@ export const icons = {
 export const onboarding = [
   {
     id: 1,
-    title: "Welcome to []. Easiest Way between shillong and guwahati",
+    title: "Welcome to []. Easiest Way between Shillong and Guwahati",
     description: "Travel, Connect and Share rides",
     image: images.onboarding1,
   },

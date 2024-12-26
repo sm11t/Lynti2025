@@ -4,6 +4,7 @@ import { router } from "expo-router";
 import Swiper from "react-native-swiper";
 import { useRef, useState } from "react";
 import { onboarding } from "@/constants";
+import CustomButton from "@/components/CustomButton";
 
 export default function Onboarding() {
   const swiperRef = useRef<Swiper>(null);
@@ -46,12 +47,14 @@ export default function Onboarding() {
                 {item.title}
               </Text>
             </View>
-            <Text className="text-md font-JakartaSemiBold text-center text-[#858585] mx-10 mt-3">
+            <Text className="text-lg font-JakartaSemiBold text-center text-[#858585] mx-10 mt-3">
               {item.description}
             </Text>
           </View>
         ))}
       </Swiper>
+
+      <CustomButton title="Next" className="w-11/12 mt-10" />
     </SafeAreaView>
   );
 }
