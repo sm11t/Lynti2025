@@ -41,7 +41,14 @@ export default function Onboarding() {
               className="h-[300px] w-full object-cover"
               resizeMode="contain"
             />
-            <Text>{item.title}</Text>
+            <View className="flex flex-row items-center justify-center">
+              <Text className="text-black text-3xl font-bold mx-10 text-center">
+                {item.title}
+              </Text>
+            </View>
+            <Text className="text-md font-JakartaSemiBold text-center text-[#858585] mx-10 mt-3">
+              {item.description}
+            </Text>
           </View>
         ))}
       </Swiper>
