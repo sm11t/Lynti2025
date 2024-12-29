@@ -12,24 +12,15 @@ export default function Onboarding() {
   const isLastSlide = activeIndex === onboarding.length - 1;
 
   return (
-    <SafeAreaView className="flex h-full items-center justify-between bg-white">
-      <TouchableOpacity
-        onPress={() => {
-          router.replace("/(auth)/sign-up");
-        }}
-        className="w-full flex justify-end items-end p-5"
-      >
-        <Text className="text-black text-md font-JakartaBold">Skip</Text>
-      </TouchableOpacity>
-
+    <SafeAreaView className="flex h-full items-center justify-between bg-black">
       <Swiper
         ref={swiperRef}
         loop={false}
         dot={
-          <View className="w-[32px] h-[4px] mx-1 bg-[#E2E8F0] rounded-full" />
+          <View className="w-[32px] h-[4px] mx-1 bg-gray-500 rounded-full" />
         }
         activeDot={
-          <View className="w-[32px] h-[4px] mx-1 bg-[#0286FF] rounded-full" />
+          <View className="w-[32px] h-[4px] mx-1 bg-green-500 rounded-full" />
         }
         onIndexChanged={(index) => setActiveIndex(index)}
       >
@@ -44,11 +35,11 @@ export default function Onboarding() {
               resizeMode="contain"
             />
             <View className="flex flex-row items-center justify-center">
-              <Text className="text-black text-3xl font-bold mx-10 text-center">
+              <Text className="text-green-500 text-3xl font-bold mx-10 text-center">
                 {item.title}
               </Text>
             </View>
-            <Text className="text-lg font-JakartaSemiBold text-center text-[#858585] mx-10 mt-3">
+            <Text className="text-lg font-JakartaSemiBold text-center text-gray-300 mx-10 mt-3">
               {item.description}
             </Text>
           </View>
@@ -62,7 +53,7 @@ export default function Onboarding() {
             ? router.replace("/(auth)/sign-up")
             : swiperRef.current?.scrollBy(1)
         }
-        className="w-11/12 mt-10"
+        className="w-11/12 mt-10" // Add additional styles if needed
       />
     </SafeAreaView>
   );

@@ -1,64 +1,46 @@
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, Text } from "react-native";
 import { ButtonProps } from "@/types/type";
-import { Text } from "react-native";
-import { getTextColor } from "@expo/metro-runtime/build/error-overlay/UI/LogBoxStyle";
 
-export const getBgVariantStyle = (variant: ButtonProps["bgVariant"]) => {
-  switch (variant) {
-    case "secondary":
-      return "bg-gray-500";
-
-    case "danger":
-      return "bg-red-500";
-
-    case "success":
-      return "bg-green-500";
-
-    case "outline":
-      return "bg-transparent border-neutral-300 border-[0.5px]";
-    default:
-      return "bg-[#0286ff]";
-  }
-};
-
-export const getTextVariantStyle = (variant: ButtonProps["textVariant"]) => {
-  switch (variant) {
+const getBgVariantStyle = (bgVariant: string) => {
+  switch (bgVariant) {
+    case "razerGreen":
+      return "bg-razer-green"; // Razer green background
     case "primary":
-      return "text-black";
-
+      return "bg-primary-500"; // Default primary color
     case "secondary":
-      return "text-grey-100";
-
-    case "danger":
-      return "text-red-100";
-
-    case "success":
-      return "text-green-100";
-
+      return "bg-secondary-500"; // Default secondary color
     default:
-      return "text-white";
+      return "bg-razer-green"; // Fallback to Razer green
   }
 };
 
+const getTextVariantStyle = (textVariant: string) => {
+  switch (textVariant) {
+    case "razerBlack":
+      return "text-razer-black"; // Razer black text
+    case "default":
+      return "text-white"; // Default white text
+    default:
+      return "text-razer-lightGray"; // Fallback to light gray text
+  }
+};
 const CustomButton = ({
   onPress,
   title,
-  bgVariant = "primary",
-  textVariant = "default",
+  bgVariant = "bg-razer-green", // Default background
+  textVariant = "text-razer-black", // Default text
   IconLeft,
-  IconRight,
   className,
   ...props
 }: ButtonProps) => (
   <TouchableOpacity
     onPress={onPress}
-    className={`rounded-full p-3 flex flex-row justify-center items-center shadow-md shadow-neutral-400/70 
-    ${getBgVariantStyle(bgVariant)} ${className}`}
+    className={`rounded-full p-3 flex justify-center items-center shadow-md 
+      ${bgVariant} ${className}`}
     {...props}
   >
-    {IconLeft && <IconLeft />}
-    <Text className={`text-lg font-bold ${getTextVariantStyle}`}>{title}</Text>
-    {IconRight && <IconRight />}
+    {IconLeft && <IconLeft />} {/* Google logo rendering here */}
+    <Text className={`text-lg font-bold ${textVariant}`}>{title}</Text>
   </TouchableOpacity>
 );
 

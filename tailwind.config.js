@@ -14,6 +14,7 @@ module.exports = {
         JakartaSemiBold: ["Jakarta-SemiBold", "sans-serif"],
       },
       colors: {
+        // Existing colors
         primary: {
           100: "#F5F8FF",
           200: "#EBF4FF",
@@ -78,6 +79,16 @@ module.exports = {
           600: "#E6F3FF",
           700: "#EBEBEB",
           800: "#ADADAD",
+        },
+
+        // New Razer-inspired color scheme
+        razer: {
+          black: "#2f2f2f",
+          darkGray: "#696969",
+          lightGray: "#d3d3d3",
+          green: "#64c261", // Bright neon green
+          mutedGreen: "#4e7f4c", // Slightly darker green for accents
+          100: "#F8F8F8",
         },
       },
     },
