@@ -49,8 +49,8 @@ export default function SignIn() {
   };
 
   return (
-    <ScrollView className="flex-1 bg-white">
-      <View className="flex-1 bg-white">
+    <ScrollView className="flex-1 bg-razer-black">
+      <View className="flex-1 bg-razer-black">
         <View className="relative w-full h-[250px]">
           <Image source={images.signUpCar} className="z-0 w-full h-[250px]" />
           <Text className="text-2xl text-black font-JakartaSemiBold absolute bottom-5 left-5">
@@ -99,7 +99,7 @@ export default function SignIn() {
             className="text-lg text-center text-general-200 mt-10"
           >
             <Text>Don't have an Account? </Text>
-            <Text className="text-primary-500">Sign Up</Text>
+            <Text className="text-razer-green">Sign Up</Text>
           </Link>
         </View>
       </View>

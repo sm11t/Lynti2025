@@ -83,12 +83,12 @@ module.exports = {
 
         // New Razer-inspired color scheme
         razer: {
-          black: "#2f2f2f",
-          darkGray: "#696969",
-          lightGray: "#d3d3d3",
-          green: "#64c261", // Bright neon green
-          mutedGreen: "#4e7f4c", // Slightly darker green for accents
-          100: "#F8F8F8",
+          black: "#1c1c1c", // Background black
+          darkGray: "#333333", // Input fields and borders
+          lightGray: "#A6A6A6", // Placeholder text
+          green: "#00FF00", // Primary neon green
+          darkGreen: "#00CC00", // Button hover green
+          accentGray: "#2F2F2F", // Card background or overlays
         },
       },
     },

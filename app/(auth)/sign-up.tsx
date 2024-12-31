@@ -77,12 +77,12 @@ const SignUp = () => {
   };
 
   return (
-    <ScrollView className="flex-1 bg-white">
-      <View className="flex-1 bg-white">
+    <ScrollView className="flex-1 bg-razer-black">
+      <View className="flex-1 bg-razer-black">
         {/* Header image & title */}
         <View className="relative w-full h-[250px]">
           <Image source={images.signUpCar} className="z-0 w-full h-[250px]" />
-          <Text className="text-2xl text-black font-JakartaSemiBold absolute bottom-5 left-5">
+          <Text className="text-2xl text-razer-green font-JakartaSemiBold absolute bottom-5 left-5">
             Create Your Account
           </Text>
         </View>
@@ -117,16 +117,16 @@ const SignUp = () => {
           <CustomButton
             title="Sign Up"
             onPress={onSignUpPress}
-            className="mt-6"
+            className="mt-6 bg-razer-green text-black"
           />
           <OAuth />
 
           <Link
             href="/sign-in"
-            className="text-lg text-center text-general-200 mt-10"
+            className="text-lg text-center text-razer-lightGray mt-10"
           >
             Already have an account?{" "}
-            <Text className="text-primary-500">Log In</Text>
+            <Text className="text-razer-green">Log In</Text>
           </Link>
         </View>
 
@@ -139,11 +139,11 @@ const SignUp = () => {
             }
           }}
         >
-          <View className="bg-white px-7 py-9 rounded-2xl min-h-[300px]">
-            <Text className="font-JakartaExtraBold text-2xl mb-2">
+          <View className="bg-razer-darkGray px-7 py-9 rounded-2xl min-h-[300px]">
+            <Text className="font-JakartaExtraBold text-2xl text-razer-green mb-2">
               Verification
             </Text>
-            <Text className="font-Jakarta mb-5">
+            <Text className="font-Jakarta text-razer-lightGray mb-5">
               We've sent a verification code to {form.email}.
             </Text>
             <InputField
@@ -165,22 +165,22 @@ const SignUp = () => {
             <CustomButton
               title="Verify Email"
               onPress={onPressVerify}
-              className="mt-5 bg-success-500"
+              className="mt-5 bg-razer-green text-black"
             />
           </View>
         </ReactNativeModal>
 
         {/* Success Modal */}
         <ReactNativeModal isVisible={showSuccessModal}>
-          <View className="bg-white px-7 py-9 rounded-2xl min-h-[300px]">
+          <View className="bg-razer-darkGray px-7 py-9 rounded-2xl min-h-[300px]">
             <Image
               source={images.check}
               className="w-[110px] h-[110px] mx-auto my-5"
             />
-            <Text className="text-3xl font-JakartaBold text-center">
+            <Text className="text-3xl font-JakartaBold text-razer-green text-center">
               Verified
             </Text>
-            <Text className="text-base text-gray-400 font-Jakarta text-center mt-2">
+            <Text className="text-base text-razer-lightGray font-Jakarta text-center mt-2">
               You have successfully verified your account.
             </Text>
             <CustomButton
@@ -189,7 +189,7 @@ const SignUp = () => {
                 setShowSuccessModal(false);
                 router.push(`/(root)/(tabs)/home`);
               }}
-              className="mt-5"
+              className="mt-5 bg-razer-green text-black"
             />
           </View>
         </ReactNativeModal>

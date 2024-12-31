@@ -1,6 +1,6 @@
 import { useOAuth } from "@clerk/clerk-expo";
 import { router } from "expo-router";
-import { Alert, Image, Text, View } from "react-native";
+import { Alert, Image, Text, View, TouchableOpacity } from "react-native";
 
 import CustomButton from "@/components/CustomButton";
 import { icons } from "@/constants";
@@ -21,27 +21,28 @@ const OAuth = () => {
   };
 
   return (
-    <View>
-      <View className="flex flex-row justify-center items-center mt-4 gap-x-3">
-        <View className="flex-1 h-[1px] bg-general-100" />
-        <Text className="text-lg">Or</Text>
-        <View className="flex-1 h-[1px] bg-general-100" />
+    <View className="w-full mt-6">
+      {/* Divider */}
+      <View className="flex flex-row items-center justify-center mb-4">
+        <View className="h-[1px] flex-1 bg-razer-darkGray" />
+        <Text className="text-razer-lightGray mx-4">Or</Text>
+        <View className="h-[1px] flex-1 bg-razer-darkGray" />
       </View>
 
-      <CustomButton
-        title="Log In with Google"
-        className="mt-5 w-full shadow-none"
-        IconLeft={() => (
-          <Image
-            source={icons.google}
-            resizeMode="contain"
-            className="w-5 h-5 mx-2"
-          />
-        )}
-        bgVariant="outline"
-        textVariant="primary"
+      {/* Google Login Button */}
+      <TouchableOpacity
         onPress={handleGoogleSignIn}
-      />
+        className="flex flex-row items-center justify-center bg-white py-3 px-4 rounded-lg shadow-md"
+      >
+        <Image
+          source={icons.google}
+          resizeMode="contain"
+          className="w-5 h-5 mr-3"
+        />
+        <Text className="text-black text-base font-JakartaSemiBold">
+          Log In with Google
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 };
