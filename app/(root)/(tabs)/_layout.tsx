@@ -25,11 +25,11 @@ export default function Layout() {
                 tabBarStyle: {
                     position: "absolute",
                     bottom: 30, // Slightly raised from the bottom
-                    width: "80%", // Set the desired width of the navbar
-                    marginHorizontal: "10%", // Ensures it is centered (100% - 70%) / 2
-                    backgroundColor: "#1c1c1c", // Razer black
-                    borderRadius: 40, // More rounded for a pill-like design
-                    height: 60, // Maintain height
+                    width: "80%", // Centered navbar
+                    marginHorizontal: "10%", // Ensures it is centered
+                    backgroundColor: "#2F2F2F", // Lighter color for the navbar
+                    borderRadius: 40, // Rounded for pill-like design
+                    height: 60, // Maintain consistent height
                     paddingTop: 8,
                     paddingBottom: 8,
                     justifyContent: "center",
@@ -37,10 +37,10 @@ export default function Layout() {
                     shadowOpacity: 0.25,
                     shadowOffset: {width: 0, height: 4},
                     shadowRadius: 10,
-                    elevation: 10, // Add elevation for Android shadows
+                    elevation: 10, // Shadow for Android
                 },
-                tabBarActiveTintColor: "#00FF00", // Razer neon green
-                tabBarInactiveTintColor: "#A6A6A6", // Light gray
+                tabBarActiveTintColor: "#00FF00", // Active tab color
+                tabBarInactiveTintColor: "#A6A6A6", // Inactive tab color
             }}
         >
             <Tabs.Screen
