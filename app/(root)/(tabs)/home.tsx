@@ -1,5 +1,12 @@
 import {SignedIn, SignedOut, useUser} from "@clerk/clerk-expo";
-import {SafeAreaView, ScrollView, Text, TextInput, View, TouchableOpacity} from "react-native";
+import {
+    SafeAreaView,
+    ScrollView,
+    Text,
+    TextInput,
+    View,
+    TouchableOpacity,
+} from "react-native";
 import {FontAwesome} from "@expo/vector-icons";
 import Map from "@/components/Map";
 import {useLocationStore} from "@/store";
@@ -45,6 +52,41 @@ export default function HomeScreen() {
     return (
         <SafeAreaView className="flex-1 bg-razer-black">
             <ScrollView>
+                {/* Hamburger Menu */}
+                <View
+                    style={{
+                        position: "absolute",
+                        top: 8, // Decrease this value to move it further up
+                        left: 20,
+                        zIndex: 10,
+                    }}
+                >
+                    <TouchableOpacity
+                        onPress={() => console.log("Open Dashboard")}
+                        style={{
+                            padding: 10,
+                            borderRadius: 5,
+                        }}
+                    >
+                        {/* Hamburger Icon */}
+                        <View>
+                            {Array(3)
+                                .fill(null)
+                                .map((_, index) => (
+                                    <View
+                                        key={index}
+                                        style={{
+                                            height: 3,
+                                            backgroundColor: "#00FF00", // Razer Green
+                                            marginVertical: 2, // Space between lines
+                                            width: 25, // Line width
+                                        }}
+                                    />
+                                ))}
+                        </View>
+                    </TouchableOpacity>
+                </View>
+
                 {/* Greeting Section */}
                 <SignedIn>
                     <Text className="text-razer-green text-2xl font-JakartaSemiBold mt-16 pl-7">
