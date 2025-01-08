@@ -20,6 +20,11 @@ type Section = {
   data: SectionItem[];
 };
 
+const capitalizeFirstLetter = (str: any) => {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+
 const Profile = () => {
   const { user } = useUser();
 
@@ -30,14 +35,14 @@ const Profile = () => {
         { id: "1", label: "Personal Information" },
         { id: "2", label: "Password & Security" },
         { id: "3", label: "Payment Methods" },
-        { id: "3", label: "Ride History" },
+        { id: "4", label: "Ride History" },
       ],
     },
     {
       title: "Preferences",
       data: [
-        { id: "4", label: "Notifications" },
-        { id: "5", label: "Privacy" },
+        { id: "5", label: "Notifications" },
+        { id: "6", label: "Privacy" },
       ],
     },
   ];
@@ -50,7 +55,10 @@ const Profile = () => {
         backgroundColor: "#1C1C1E",
       }}
     >
-      <Text style={{ fontSize: 16, color: "#8E8E93", fontWeight: "500" }}>
+      <Text
+        className="text-razer-green"
+        style={{ fontSize: 16, fontWeight: "500" }}
+      >
         {title}
       </Text>
     </View>
@@ -81,15 +89,36 @@ const Profile = () => {
           alignItems: "center",
         }}
       >
-        <Image
-          source={{
-            uri: user?.imageUrl || "https://via.placeholder.com/100",
+        <View
+          style={{
+            width: 70,
+            height: 70,
+            borderRadius: 35,
+            borderWidth: 3,
+            borderColor: "#44D62C",
+            justifyContent: "center",
+            alignItems: "center",
+            marginRight: 15,
           }}
-          style={{ width: 60, height: 60, borderRadius: 30, marginRight: 15 }}
-        />
+        >
+          <Image
+            source={{
+              uri: user?.imageUrl || "https://via.placeholder.com/100",
+            }}
+            style={{
+              width: 60,
+              height: 60,
+              borderRadius: 30,
+            }}
+          />
+        </View>
         <View>
-          <Text style={{ fontSize: 20, fontWeight: "600", color: "#FFFFFF" }}>
-            {user?.firstName} {user?.lastName}
+          <Text
+            className="text-razer-green"
+            style={{ fontSize: 20, fontWeight: "600" }}
+          >
+            {capitalizeFirstLetter(user?.firstName)}{" "}
+            {capitalizeFirstLetter(user?.lastName)}
           </Text>
           <Text style={{ fontSize: 16, color: "#8E8E93" }}>
             {user?.emailAddresses?.[0]?.emailAddress || "No Email Available"}
