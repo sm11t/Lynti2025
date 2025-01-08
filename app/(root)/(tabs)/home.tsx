@@ -12,11 +12,13 @@ import Map from "@/components/Map";
 import {useLocationStore} from "@/store";
 import {useEffect, useState} from "react";
 import * as Location from "expo-location";
+import {useRouter} from "expo-router"; // Import the router hook
 
 export default function HomeScreen() {
     const {setUserLocation} = useLocationStore();
     const {user} = useUser();
     const [hasPermissions, setHasPermissions] = useState(false);
+    const router = useRouter(); // Initialize the router hook
 
     const recentDestinations = [
         {name: "West Sixth Tempe", address: "526 S Mill Ave, Tempe"},
@@ -101,20 +103,22 @@ export default function HomeScreen() {
                 </SignedOut>
 
                 {/* Search Bar Section */}
-                <View
+                <TouchableOpacity
+                    onPress={() => router.push("/(root)/search")} // Navigate to search.tsx
                     className="flex-row items-center mx-auto mt-6 border border-razer-green bg-razer-darkGray rounded-full h-16 w-11/12 px-4 shadow-lg"
                 >
                     <FontAwesome name="search" size={20} color="#A6A6A6"/>
                     <TextInput
                         placeholder="Where are you going?"
                         placeholderTextColor="#A6A6A6"
+                        editable={false} // Disable editing, acts as a button
                         style={{
                             fontSize: 18,
                             fontFamily: "Inter_400Regular",
                         }}
                         className="flex-1 text-white ml-3 text-left"
                     />
-                </View>
+                </TouchableOpacity>
 
                 {/* Schedule Button */}
                 <View
