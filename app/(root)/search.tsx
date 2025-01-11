@@ -6,8 +6,6 @@ import {FontAwesome} from "@expo/vector-icons"; // Icon library for icons
 export default function SearchScreen() {
     const router = useRouter(); // Router for navigation
     const [activeField, setActiveField] = useState("Destination"); // Default state set to "Destination"
-    const [destination, setDestination] = useState(""); // State for the Destination input
-    const [isEditing, setIsEditing] = useState(false); // Toggle between view and edit mode
 
     return (
         <View className="flex-1 bg-razer-darkGray">
@@ -34,67 +32,56 @@ export default function SearchScreen() {
             <View className="flex-1 justify-start items-center mt-32">
                 <View className="w-11/12 bg-razer-darkGray border border-razer-green rounded-lg p-4">
                     {/* Start Section */}
-                    <TouchableOpacity
-                        onPress={() => setActiveField("Start")} // Set state to "Start" when pressed
-                        className="flex-row items-center mb-4"
-                    >
+                    <View className="flex-row items-center mb-4">
                         <FontAwesome
-                            name="circle"
+                            name="circle-o"
                             size={12}
-                            color="#00FF00" // Green for the Start icon
+                            color="#00FF00" // Green for Start icon
                             className="mr-4"
                         />
                         <View>
-                            <Text className="text-razer-green text-sm font-medium">
-                                Start
-                            </Text>
-                            <Text className="text-white text-lg font-semibold">
-                                Current Location
-                            </Text>
+                            <Text className="text-razer-green text-sm font-medium">Start</Text>
+                            <TextInput
+                                placeholder="Current Location" // Placeholder as "Current Location"
+                                placeholderTextColor="#FFFFFF" // Placeholder appears white
+                                className="text-white text-lg mt-1"
+                                style={{
+                                    height: 35, // Ensure enough height
+                                    paddingVertical: 2, // Prevent text clipping
+                                    borderBottomWidth: 0, // Remove unnecessary bottom border
+                                }}
+                                onFocus={() => setActiveField("Start")} // Set active field to "Start" when focused
+                            />
                         </View>
-                    </TouchableOpacity>
+                    </View>
 
                     {/* Divider */}
                     <View className="h-px bg-gray-600 mb-4"/>
 
                     {/* Destination Section */}
-                    <TouchableOpacity
-                        onPress={() => {
-                            setActiveField("Destination"); // Set state to "Destination"
-                            setIsEditing(true); // Enable edit mode
-                        }}
-                        className="flex-row items-center"
-                    >
+                    <View className="flex-row items-center">
                         <FontAwesome
                             name="circle"
                             size={12}
-                            color="#00FF00" // Green for the Destination icon
+                            color="#00FF00" // Green for Destination icon
                             className="mr-4"
                         />
                         <View>
-                            <Text className="text-razer-green text-sm font-medium">
-                                Destination
-                            </Text>
-                            {isEditing ? (
-                                <TextInput
-                                    value={destination} // Current value for the input
-                                    onChangeText={setDestination} // Update state as the user types
-                                    placeholder="Set Destination"
-                                    placeholderTextColor="#A6A6A6" // Placeholder color
-                                    autoFocus // Auto focus when editing starts
-                                    onBlur={() => setIsEditing(false)} // Exit edit mode when input loses focus
-                                    className="text-gray-400 text-lg"
-                                />
-                            ) : (
-                                <Text
-                                    className="text-gray-400 text-lg"
-                                    style={{marginBottom: 0}} // Adjust spacing
-                                >
-                                    {destination || "Set Destination"} {/* Display input value or placeholder */}
-                                </Text>
-                            )}
+                            <Text className="text-razer-green text-sm font-medium">Destination</Text>
+                            <TextInput
+                                placeholder="Enter Destination"
+                                placeholderTextColor="#A6A6A6"
+                                className="text-white text-lg mt-1"
+                                style={{
+                                    height: 35, // Ensure enough height
+                                    paddingVertical: 2, // Prevent text clipping
+                                    borderBottomWidth: 0, // Remove unnecessary bottom border
+                                }}
+                                autoFocus // Automatically opens keyboard on page load
+                                onFocus={() => setActiveField("Destination")} // Set active field to "Destination" when focused
+                            />
                         </View>
-                    </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </View>
