@@ -9,6 +9,8 @@ import {
   ListRenderItem,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useRouter } from "expo-router"; // Import useRouter from expo-router
+import { useAuth } from "@clerk/clerk-expo"; // Import useAuth for signOut
 
 type SectionItem = {
   id: string;
@@ -27,6 +29,8 @@ const capitalizeFirstLetter = (str: any) => {
 
 const Profile = () => {
   const { user } = useUser();
+  const { signOut } = useAuth(); // Get signOut function from useAuth
+  const router = useRouter(); // Get the router to navigate to different tabs
 
   const sections: Section[] = [
     {
@@ -73,10 +77,24 @@ const Profile = () => {
         borderBottomWidth: 1,
         borderBottomColor: "#3A3A3C",
       }}
+      onPress={() => {
+        if (item.label === "Personal Information") {
+          router.push("/personalInfo"); // Navigate to the PersonalInfo tab
+        }
+      }}
     >
       <Text style={{ fontSize: 16, color: "#FFFFFF" }}>{item.label}</Text>
     </TouchableOpacity>
   );
+
+  const handleLogout = async () => {
+    try {
+      await signOut(); // Sign out from Clerk
+      router.push("../../(auth)/sign-in"); // Navigate to the sign-in screen
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#0F0F0F" }}>
@@ -142,6 +160,23 @@ const Profile = () => {
         )}
         ListHeaderComponent={() => null}
       />
+
+      {/* Logout Button */}
+      <TouchableOpacity
+        onPress={handleLogout}
+        style={{
+          marginBottom: 75,
+          margin: 15,
+          padding: 15,
+          backgroundColor: "#FF3B30",
+          borderRadius: 10,
+          alignItems: "center",
+        }}
+      >
+        <Text style={{ fontSize: 16, color: "#FFFFFF", fontWeight: "500" }}>
+          Log Out
+        </Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
