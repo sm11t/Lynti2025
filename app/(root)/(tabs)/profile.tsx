@@ -79,7 +79,10 @@ const Profile = () => {
       }}
       onPress={() => {
         if (item.label === "Personal Information") {
-          router.push("/personalInfo"); // Navigate to the PersonalInfo tab
+          router.push("/personalInfo");
+        }
+        if (item.label === "Password & Security") {
+          router.push("/Password_security");
         }
       }}
     >
