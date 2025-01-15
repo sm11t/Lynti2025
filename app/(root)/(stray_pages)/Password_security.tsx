@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Text, View, TextInput, TouchableOpacity, Switch } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native"; // Import navigation hook
+import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
 const PasswordAndSecurity = () => {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -26,7 +27,7 @@ const PasswordAndSecurity = () => {
     return regex.test(password);
   };
 
-  const handlePasswordChange = () => {
+  const handlePasswordChange = async () => {
     if (newPassword !== confirmPassword) {
       alert("New Password and Confirm Password do not match!");
       return;
@@ -39,8 +40,27 @@ const PasswordAndSecurity = () => {
       return;
     }
 
-    // Implement logic to change the password (API call)
-    alert("Password changed successfully!");
+    try {
+      const response = await axios.post("http://localhost:5000", {
+        userId: "user_id_here", // Replace with logged-in user's ID
+        currentPassword,
+        newPassword,
+      });
+
+      alert(response.data.message); // Success message
+      setIsChangingPassword(false); // Reset form state
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        // Axios-specific error handling
+        alert(error.response?.data?.message || "Error changing password");
+      } else if (error instanceof Error) {
+        // General JavaScript error handling
+        alert(error.message);
+      } else {
+        // Unknown error handling
+        alert("An unexpected error occurred");
+      }
+    }
   };
 
   const toggle2FA = () => {
