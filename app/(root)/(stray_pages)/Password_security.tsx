@@ -33,7 +33,7 @@ const PasswordAndSecurity = () => {
     const fetchCurrentPassword = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:5000/current-password",
+          "http://localhost:3000/current-password",
           {
             params: { userId: userId },
           }
@@ -62,9 +62,9 @@ const PasswordAndSecurity = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/change-password",
+        "http://localhost:3000/change-password",
         {
-          userId: "user_id_here",
+          userId: userId,
           currentPassword,
           newPassword,
         }
@@ -215,19 +215,18 @@ const PasswordAndSecurity = () => {
                 borderRadius: 8,
                 fontSize: 16,
               }}
-              value={currentPassword}
-              onChangeText={setCurrentPassword}
-              secureTextEntry={!showCurrentPassword}
-              placeholder="Enter current password"
+              value={confirmPassword}
+              onChangeText={setConfirmPassword}
+              secureTextEntry={!showConfirmPassword}
+              placeholder="Confirm new password"
               placeholderTextColor="#8E8E93"
-              editable={false}
             />
             <TouchableOpacity
-              onPress={() => setShowCurrentPassword((prev) => !prev)}
+              onPress={() => setShowConfirmPassword((prev) => !prev)}
               style={{ marginLeft: 10 }}
             >
               <Ionicons
-                name={showCurrentPassword ? "eye-off" : "eye"}
+                name={showConfirmPassword ? "eye-off" : "eye"}
                 size={24}
                 color="#FFFFFF"
               />
