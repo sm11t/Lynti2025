@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, TextInput, TouchableOpacity, Switch } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import { useUser } from "@clerk/clerk-react";
 
 const PasswordAndSecurity = () => {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -26,6 +27,25 @@ const PasswordAndSecurity = () => {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
     return regex.test(password);
   };
+  const { user } = useUser();
+  const userId = user?.id;
+  useEffect(() => {
+    const fetchCurrentPassword = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/current-password",
+          {
+            params: { userId: userId },
+          }
+        );
+        setCurrentPassword(response.data.currentPassword);
+      } catch (error) {
+        console.error("Error fetching current password", error);
+      }
+    };
+
+    fetchCurrentPassword();
+  }, []);
 
   const handlePasswordChange = async () => {
     if (newPassword !== confirmPassword) {
@@ -41,23 +61,23 @@ const PasswordAndSecurity = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000", {
-        userId: "user_id_here", // Replace with logged-in user's ID
-        currentPassword,
-        newPassword,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/change-password",
+        {
+          userId: "user_id_here",
+          currentPassword,
+          newPassword,
+        }
+      );
 
-      alert(response.data.message); // Success message
-      setIsChangingPassword(false); // Reset form state
-    } catch (error: unknown) {
+      alert(response.data.message);
+      setIsChangingPassword(false);
+    } catch (error: any) {
       if (axios.isAxiosError(error)) {
-        // Axios-specific error handling
         alert(error.response?.data?.message || "Error changing password");
       } else if (error instanceof Error) {
-        // General JavaScript error handling
         alert(error.message);
       } else {
-        // Unknown error handling
         alert("An unexpected error occurred");
       }
     }
@@ -84,7 +104,6 @@ const PasswordAndSecurity = () => {
         Password & Security
       </Text>
 
-      {/* Current Password */}
       {!isChangingPassword && (
         <>
           <Text style={{ color: "#8E8E93", marginBottom: 5 }}>
@@ -105,7 +124,7 @@ const PasswordAndSecurity = () => {
               secureTextEntry={!showCurrentPassword}
               placeholder="Enter current password"
               placeholderTextColor="#8E8E93"
-              editable={!isChangingPassword} // Lock the field when changing password
+              editable={!isChangingPassword}
             />
             <TouchableOpacity
               onPress={() => setShowCurrentPassword((prev) => !prev)}
@@ -196,18 +215,19 @@ const PasswordAndSecurity = () => {
                 borderRadius: 8,
                 fontSize: 16,
               }}
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              secureTextEntry={!showConfirmPassword}
-              placeholder="Confirm new password"
+              value={currentPassword}
+              onChangeText={setCurrentPassword}
+              secureTextEntry={!showCurrentPassword}
+              placeholder="Enter current password"
               placeholderTextColor="#8E8E93"
+              editable={false}
             />
             <TouchableOpacity
-              onPress={() => setShowConfirmPassword((prev) => !prev)}
+              onPress={() => setShowCurrentPassword((prev) => !prev)}
               style={{ marginLeft: 10 }}
             >
               <Ionicons
-                name={showConfirmPassword ? "eye-off" : "eye"}
+                name={showCurrentPassword ? "eye-off" : "eye"}
                 size={24}
                 color="#FFFFFF"
               />
