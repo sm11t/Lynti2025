@@ -11,38 +11,33 @@ export default function SearchScreen() {
     const startInputRef = useRef(null);
     const destinationInputRef = useRef(null);
 
-    // Automatically focus on Destination input when the screen loads
     useEffect(() => {
-        setTimeout(() => {
-            destinationInputRef.current?.focus();
-        }, 500); // Small delay to ensure UI is ready before focusing
+        // Focus the destination input when the screen loads
+        setTimeout(() => destinationInputRef.current?.focus(), 200);
     }, []);
 
-    // Dummy list of recent destinations
-    const recentDestinations = [
-        {id: "1", name: "West 6th", address: "6th St"},
-        {id: "2", name: "The Carmin", address: "1000 E Apache Blvd"},
-        {id: "3", name: "Scottsdale Fashion Square", address: "E Highland Ave"},
-    ];
-
-    // Dummy list of favorite start locations
-    const favoriteStarts = [
-        {id: "1", name: "ASU Memorial Union", address: "Tempe, AZ"},
-        {id: "2", name: "Phoenix Sky Harbor", address: "Phoenix, AZ"},
-        {id: "3", name: "Downtown Chandler", address: "Chandler, AZ"},
-    ];
+    // Function to log locations when checkmark is pressed
+    const logLocations = () => {
+        console.log(`Start: ${startLocation}`);
+        console.log(`Destination: ${destination}`);
+    };
 
     return (
         <View className="flex-1 bg-razer-darkGray">
             {/* Top Navigation: Red X Button and Label */}
-            <View className="absolute top-16 left-4 right-4 items-center">
-                <TouchableOpacity onPress={() => router.back()} className="absolute left-0 p-2 rounded-full">
+            <View className="absolute top-16 left-4 right-4 flex-row justify-between items-center">
+                {/* Back Button */}
+                <TouchableOpacity onPress={() => router.back()} className="p-2 rounded-full">
                     <FontAwesome name="times" size={25} color="red"/>
                 </TouchableOpacity>
 
-                <Text className="text-white text-xl font-semibold" style={{marginTop: 7}}>
-                    {activeField}
-                </Text>
+                {/* Active Field Label */}
+                <Text className="text-white text-xl font-semibold">{activeField}</Text>
+
+                {/* Green Checkmark Button */}
+                <TouchableOpacity onPress={logLocations} className="p-2 rounded-full">
+                    <FontAwesome name="check" size={25} color="#00FF00"/>
+                </TouchableOpacity>
             </View>
 
             {/* Main Box: Start and Destination Sections */}
@@ -55,11 +50,11 @@ export default function SearchScreen() {
                         <View style={{flex: 1}}>
                             <Text className="text-razer-green text-sm font-medium">Start</Text>
                             <TextInput
-                                ref={startInputRef} // Attach ref to Start input
+                                ref={startInputRef}
                                 placeholder="Enter Start Location"
                                 placeholderTextColor="gray"
                                 value={startLocation}
-                                onChangeText={setStartLocation} // Update value when typed
+                                onChangeText={setStartLocation}
                                 style={{
                                     height: 35,
                                     paddingVertical: 2,
@@ -68,7 +63,7 @@ export default function SearchScreen() {
                                 }}
                                 onFocus={() => {
                                     setActiveField("Start");
-                                    destinationInputRef.current?.blur(); // Blur Destination when Start is clicked
+                                    destinationInputRef.current?.blur();
                                 }}
                             />
                         </View>
@@ -83,11 +78,11 @@ export default function SearchScreen() {
                         <View style={{flex: 1}}>
                             <Text className="text-razer-green text-sm font-medium">Destination</Text>
                             <TextInput
-                                ref={destinationInputRef} // Attach ref to Destination input
+                                ref={destinationInputRef}
                                 placeholder="Enter Destination"
                                 placeholderTextColor="#A6A6A6"
                                 value={destination}
-                                onChangeText={setDestination} // Update value when typed
+                                onChangeText={setDestination}
                                 style={{
                                     height: 35,
                                     paddingVertical: 2,
@@ -96,7 +91,7 @@ export default function SearchScreen() {
                                 }}
                                 onFocus={() => {
                                     setActiveField("Destination");
-                                    startInputRef.current?.blur(); // Blur Start when Destination is clicked
+                                    startInputRef.current?.blur();
                                 }}
                             />
                         </View>
@@ -105,9 +100,12 @@ export default function SearchScreen() {
 
                 {/* Conditional Rendering of FlatList Based on Active Field */}
                 {activeField === "Start" ? (
-                    // Show Favorite Start Locations List
                     <FlatList
-                        data={favoriteStarts}
+                        data={[
+                            {id: "1", name: "ASU Memorial Union", address: "Tempe, AZ"},
+                            {id: "2", name: "Phoenix Sky Harbor", address: "Phoenix, AZ"},
+                            {id: "3", name: "Downtown Chandler", address: "Chandler, AZ"},
+                        ]}
                         keyExtractor={(item) => item.id}
                         renderItem={({item}) => (
                             <TouchableOpacity
@@ -122,17 +120,10 @@ export default function SearchScreen() {
                                     width: "90%",
                                 }}
                             >
-                                {/* Star Icon */}
                                 <FontAwesome name="star" size={20} color="#FFD700" style={{marginRight: 15}}/>
-
-                                {/* Start Location Info */}
                                 <View>
-                                    <Text style={{color: "white", fontSize: 16, fontWeight: "bold"}}>
-                                        {item.name}
-                                    </Text>
-                                    <Text style={{color: "#A6A6A6", fontSize: 14}}>
-                                        {item.address}
-                                    </Text>
+                                    <Text style={{color: "white", fontSize: 16, fontWeight: "bold"}}>{item.name}</Text>
+                                    <Text style={{color: "#A6A6A6", fontSize: 14}}>{item.address}</Text>
                                 </View>
                             </TouchableOpacity>
                         )}
@@ -142,9 +133,12 @@ export default function SearchScreen() {
                         }}
                     />
                 ) : (
-                    // Show Recent Destinations List
                     <FlatList
-                        data={recentDestinations}
+                        data={[
+                            {id: "1", name: "West 6th", address: "6th St"},
+                            {id: "2", name: "The Carmin", address: "1000 E Apache Blvd"},
+                            {id: "3", name: "Scottsdale Fashion Square", address: "E Highland Ave"},
+                        ]}
                         keyExtractor={(item) => item.id}
                         renderItem={({item}) => (
                             <TouchableOpacity
@@ -159,17 +153,10 @@ export default function SearchScreen() {
                                     width: "90%",
                                 }}
                             >
-                                {/* Rewind Icon */}
                                 <FontAwesome name="history" size={20} color="#00FF00" style={{marginRight: 15}}/>
-
-                                {/* Destination Info */}
                                 <View>
-                                    <Text style={{color: "white", fontSize: 16, fontWeight: "bold"}}>
-                                        {item.name}
-                                    </Text>
-                                    <Text style={{color: "#A6A6A6", fontSize: 14}}>
-                                        {item.address}
-                                    </Text>
+                                    <Text style={{color: "white", fontSize: 16, fontWeight: "bold"}}>{item.name}</Text>
+                                    <Text style={{color: "#A6A6A6", fontSize: 14}}>{item.address}</Text>
                                 </View>
                             </TouchableOpacity>
                         )}
