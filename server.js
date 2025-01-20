@@ -1,76 +1,61 @@
 const express = require("express");
-const { Pool } = require("pg");
-const bcrypt = require("bcryptjs");
+const { Client } = require("pg");
 const cors = require("cors");
-require("dotenv").config();
 
 const app = express();
-app.use(express.json());
-app.use(cors());
+const port = 5000;
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
+// Middleware
+app.use(cors());
+app.use(express.json());
+
+// PostgreSQL Client Setup
+const client = new Client({
+  connectionString:
+    "postgresql://neondb_owner:password@ep-old-cherry-a6j5tvv7.us-west-2.aws.neon.tech/neondb?sslmode=require",
 });
 
-// Utility function to validate password strength
-const validatePassword = (password) => {
-  // At least 8 characters, 1 uppercase letter, 1 lowercase letter, and 1 number
-  const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-  return regex.test(password);
-};
+client.connect();
 
-app.post("/change-password", async (req, res) => {
-  const { userId, currentPassword, newPassword } = req.body;
-
-  // Validate input fields
-  if (!userId || !currentPassword || !newPassword) {
-    return res.status(400).json({ message: "All fields are required" });
+// Get user data
+app.get("/get-user-data", async (req, res) => {
+  try {
+    const result = await client.query(
+      "SELECT name, profile_image FROM users WHERE id = $1",
+      [1]
+    ); // Assuming user with ID 1
+    if (result.rows.length) {
+      res.json(result.rows[0]);
+    } else {
+      res.status(404).send("User not found");
+    }
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    res.status(500).send("Error fetching data");
   }
+});
 
-  if (!validatePassword(newPassword)) {
-    return res.status(400).json({
-      message:
-        "New password must be at least 8 characters, 1 uppercase letter, 1 lowercase letter, and 1 number",
-    });
-  }
+// Update user data
+app.post("/update-user", async (req, res) => {
+  const { name, profile_image } = req.body;
 
   try {
-    // Step 1: Get the current password hash from the database
-    const result = await pool.query(
-      "SELECT password FROM users WHERE id = $1",
-      [userId]
+    const result = await client.query(
+      "UPDATE users SET name = $1, profile_image = $2 WHERE id = $3 RETURNING *",
+      [name, profile_image, 1] // Assuming user with ID 1
     );
 
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: "User not found" });
+    if (result.rows.length) {
+      res.json(result.rows[0]);
+    } else {
+      res.status(404).send("User not found");
     }
-
-    const hashedPassword = result.rows[0].password;
-
-    // Step 2: Compare current password with the hash
-    const isMatch = await bcrypt.compare(currentPassword, hashedPassword);
-    if (!isMatch) {
-      return res.status(401).json({ message: "Current password is incorrect" });
-    }
-
-    // Step 3: Hash the new password
-    const newHashedPassword = await bcrypt.hash(newPassword, 10);
-
-    // Step 4: Update password in the database
-    await pool.query("UPDATE users SET password = $1 WHERE id = $2", [
-      newHashedPassword,
-      userId,
-    ]);
-
-    return res.json({ message: "Password updated successfully!" });
   } catch (error) {
-    console.error("Error updating password:", error);
-    return res.status(500).json({ message: "Internal server error" });
+    console.error("Error saving user data:", error);
+    res.status(500).send("Error saving data");
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
 });
