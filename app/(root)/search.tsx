@@ -27,7 +27,7 @@ export default function SearchScreen() {
         }
 
         const API_KEY = "AIzaSyDZQEx9Vp7Q3xaZJ3jYJbMYzkSsnqHE7Ec"; // Replace with your actual API key
-        const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${query}&key=${API_KEY}&components=country:us`;
+        const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${query}&key=${API_KEY}&components=country:in`;
 
         try {
             const response = await fetch(url);
