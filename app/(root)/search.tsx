@@ -6,7 +6,7 @@ import {FontAwesome} from "@expo/vector-icons";
 export default function SearchScreen() {
     const router = useRouter();
     const [activeField, setActiveField] = useState("Destination");
-    const [startLocation, setStartLocation] = useState("Current Location");
+    const [startLocation, setStartLocation] = useState("");
     const [destination, setDestination] = useState("");
     const [searchQuery, setSearchQuery] = useState("");
     const [selectedLocation, setSelectedLocation] = useState({Start: startLocation, Destination: destination});
@@ -111,8 +111,8 @@ export default function SearchScreen() {
                             <Text className="text-razer-green text-sm font-medium">Start</Text>
                             <TextInput
                                 ref={startInputRef}
-                                placeholder="Enter Start Location"
-                                placeholderTextColor="gray"
+                                placeholder="Current Location"
+                                placeholderTextColor="#A6A6A6"
                                 value={activeField === "Start" ? searchQuery || selectedLocation.Start : selectedLocation.Start}
                                 onChangeText={handleInputChange}
                                 style={{
