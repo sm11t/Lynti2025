@@ -1,8 +1,10 @@
 import React from "react";
 import { Text, View, TouchableOpacity, Image, TextInput } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useNavigation } from "@react-navigation/native";
 
 const PersonalInfo = () => {
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#0F0F0F" }}>
       <View style={{ flex: 1, padding: 20 }}>
@@ -76,6 +78,9 @@ const PersonalInfo = () => {
 
         {/* Save/Done Button */}
         <TouchableOpacity
+          onPress={() => {
+            navigation.goBack();
+          }}
           style={{
             position: "absolute",
             bottom: 30,
@@ -94,7 +99,7 @@ const PersonalInfo = () => {
               fontWeight: "500",
             }}
           >
-            Save
+            Done
           </Text>
         </TouchableOpacity>
       </View>
